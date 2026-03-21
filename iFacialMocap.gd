@@ -35,7 +35,9 @@ func start_server():
 
 func _physics_process(_delta: float) -> void:
 	if udp_socket != null and udp_socket.get_available_packet_count() > 0:
-		var packet = udp_socket.get_packet()
+		var packet
+		while udp_socket.get_available_packet_count() > 0:
+			packet = udp_socket.get_packet()
 		on_message(_delta, packet.get_string_from_utf8())
 
 func test_packet():
